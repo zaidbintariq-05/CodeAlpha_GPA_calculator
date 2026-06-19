@@ -1,0 +1,16 @@
+#include<iostream>
+using namespace std;
+ int main
+{
+ int n;
+cout << "Enter number of courses: ";
+    cin >> n;
+
+    string course[20];
+    float grade[20];
+    int credit[20];
+
+    float totalGradePoints = 0;
+    int totalCredits = 0;
+    
+    cout<<endl;
