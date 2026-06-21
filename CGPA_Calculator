@@ -1,45 +1,67 @@
-#include<iostream>
+#include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
- int main
+
+class Course {
+public:
+    string courseName;
+    float gradePoint;
+    int creditHours;
+};
+
+int main() 
 {
- int n;
-cout << "Enter number of courses: ";
-    cin >> n;
-
-    string course[20];
-    float grade[20];
-    int credit[20];
-
+    Course courses[20];
+    int numberOfCourses;
     float totalGradePoints = 0;
     int totalCredits = 0;
-    
-    cout<<endl;
- for (int i = 0; i < n; i++) 
-	{
-        cout << "Course " << i + 1 << endl;
 
-        cout << "Enter course name: ";
-        cin >> course[i];
+    cout << "Enter number of courses: ";
+    cin >> numberOfCourses;
+
+    for (int i = 0; i < numberOfCourses; i++) {
+        cin.ignore();
+
+        cout << "\nEnter course name: ";
+        getline(cin, courses[i].courseName);
 
         cout << "Enter grade point: ";
-        cin >> grade[i];
+        cin >> courses[i].gradePoint;
 
         cout << "Enter credit hours: ";
-        cin >> credit[i];
+        cin >> courses[i].creditHours;
 
-        totalGradePoints += grade[i] * credit[i];
-        totalCredits += credit[i];
+        totalGradePoints += courses[i].gradePoint * courses[i].creditHours;
+        totalCredits += courses[i].creditHours;
     }
- float cgpa = totalGradePoints / totalCredits;
-cout << "FINAL RESULT";
 
-    for (int i = 0; i < n; i++) 
-	{
-        cout << course[i]<<" Grade: " << grade[i]<<" Credit Hours: " << credit[i]<< endl;
+    float cgpa = totalGradePoints / totalCredits;
+
+    ofstream file("cgpa_result.txt");
+
+    cout << "CGPA Result";
+    file << " CGPA Result ";
+
+    for (int i = 0; i < numberOfCourses; i++) {
+        cout << courses[i].courseName
+             << " Grade Point: " << courses[i].gradePoint
+             << " Credit Hours: " << courses[i].creditHours << endl;
+
+        file << courses[i].courseName
+             << " Grade Point: " << courses[i].gradePoint
+             << " Credit Hours: " << courses[i].creditHours << endl;
     }
-    cout<<endl;
-    cout << "Total Credits = " << totalCredits << endl;
-    cout << "CGPA = " << cgpa << endl;
+
+    cout << "\nTotal Credits: " << totalCredits << endl;
+    cout << "Final CGPA: " << cgpa << endl;
+
+    file << "\nTotal Credits: " << totalCredits << endl;
+    file << "Final CGPA: " << cgpa << endl;
+
+    file.close();
+
+    cout << "\nResult saved in cgpa_result.txt\n";
 
     return 0;
 }
